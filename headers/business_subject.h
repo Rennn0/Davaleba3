@@ -11,7 +11,7 @@ class BusinessSubject {
 public:
 	BusinessSubject(std::string& bn) :m_businessName(bn), m_rating(this->randomRating()), dll({}) {}
 
-
+	bool addOrder(Order& order);
 
 	float getRating()const;
 	std::string getBusinessName()const;

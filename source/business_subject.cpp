@@ -2,7 +2,6 @@
 
 float BusinessSubject::randomRating()const 
 {
-    
     return ((float)rand()/(RAND_MAX));
 }
 

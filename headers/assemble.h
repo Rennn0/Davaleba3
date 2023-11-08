@@ -4,5 +4,4 @@
 #include"./order.h"
 #include"./business_subject.h"
 #include"./trading_central.h"
-#include"./identity.h"
 #endif // !_ASSEMBLE_
