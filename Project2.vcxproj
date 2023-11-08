@@ -136,6 +136,7 @@
     <ClInclude Include="headers\assemble.h" />
     <ClInclude Include="headers\business_subject.h" />
     <ClInclude Include="headers\doubly_linked_list.h" />
+    <ClInclude Include="headers\identity.h" />
     <ClInclude Include="headers\includes.h" />
     <ClInclude Include="headers\order.h" />
     <ClInclude Include="headers\trading_central.h" />

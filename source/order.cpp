@@ -29,8 +29,10 @@ std::vector<int> Order::getProducts() const
 
 void Order::print()
 {
-    std::cout << "** order : " << this->m_oderId<<" **\n";
+    std::string spacer(15,'#');
+    std::cout << spacer << "\norder" << this->m_oderId << "\n";
     for (size_t t = 0; t < this->m_basketSize; t ++ ) {
-        std::cout << this->m_productIds[t] << '\n';
+        std::cout <<std::setw(spacer.length())<<std::right<< this->m_productIds[t]<<'\n';
     }
+    std::cout << spacer;
 }

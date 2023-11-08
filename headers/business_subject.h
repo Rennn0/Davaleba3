@@ -4,21 +4,17 @@
 #include"order.h"
 #include"doubly_linked_list.h"
 class BusinessSubject {
+	std::string m_businessName;
 	float m_rating;
+	float randomRating()const;
 	DoublyLinkedList<Order>dll;
-	float randomRating();
 public:
-	BusinessSubject() :m_rating(0), dll({}) {
-		try
-		{
+	BusinessSubject(std::string& bn) :m_businessName(bn), m_rating(this->randomRating()), dll({}) {}
 
-		}
-		catch (const std::exception&e)
-		{
-			std::cerr << e.what();
-		}
 
-	}
+
+	float getRating()const;
+	std::string getBusinessName()const;
 };
 
 #endif // !_BUSINESS_SUBJECT_
