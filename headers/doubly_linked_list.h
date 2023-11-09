@@ -29,7 +29,7 @@ public:
 	T& remove();
 	T& remove(size_t nThNode);*/
 
-	bool exists();
+	void printOrders(const std::string& busName)const;
 	void printOrders()const;
 };
 
@@ -178,6 +178,17 @@ inline bool DoublyLinkedList<T>::insert(Order& order)
 	return true;
 }
 
+template<typename T>
+inline void DoublyLinkedList<T>::printOrders(const std::string& busName)const
+{
+	Node<T>* tracer = head;
+	while (tracer != nullptr) {
+		std::cout << "\nOwner : " << busName;
+		tracer->data.print();
+		tracer = tracer->next;
+	}
+	std::cout << "\nSize " << this->size;
+}
 template<typename T>
 inline void DoublyLinkedList<T>::printOrders()const
 {

@@ -8,7 +8,7 @@ float BusinessSubject::randomRating()const
 bool BusinessSubject::addOrder(Order& order)
 {
 	this->m_rating = this->randomRating();
-	return this->dll.insert(order);
+	return this->dll.push_back(order);
 }
 
 float BusinessSubject::getRating() const
@@ -23,5 +23,5 @@ std::string BusinessSubject::getBusinessName() const
 
 void BusinessSubject::printOrders() const
 {
-	this->dll.printOrders();
+	this->dll.printOrders(this->m_businessName);
 }
