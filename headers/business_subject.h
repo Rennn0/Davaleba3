@@ -15,6 +15,8 @@ public:
 
 	float getRating()const;
 	std::string getBusinessName()const;
+
+	void printOrders()const;
 };
 
 #endif // !_BUSINESS_SUBJECT_

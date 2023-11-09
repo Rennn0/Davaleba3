@@ -15,17 +15,34 @@ class DoublyLinkedList {
 	Node<T>* tail;
 	uint32_t size;
 public:
-	DoublyLinkedList() :head(nullptr), tail(nullptr),size(0) {}
+	DoublyLinkedList() :head(nullptr), tail(nullptr), size(0) {}
+	DoublyLinkedList(const DoublyLinkedList<T>& other);
 	~DoublyLinkedList();
-	void push_front(T data);
-	void push_back(T data);
-	void pop_front();
-	void pop_back();
-
+	bool push_front(T data);
+	bool push_back(T data);
+	const T& pop_front();
+	const T& pop_back();
 	bool insert(size_t index, T data);
 	bool insert(Order& order);
-	void print();
+
+	/* TODO
+	T& remove();
+	T& remove(size_t nThNode);*/
+
+	bool exists();
+	void printOrders()const;
 };
+
+template<typename T>
+inline DoublyLinkedList<T>::DoublyLinkedList(const DoublyLinkedList<T>& other)
+	:head(nullptr), tail(nullptr), size(0)
+{
+	Node<T>* current = other.head;
+	while (current != nullptr) {
+		this->push_back(current->data);
+		current = current->next;
+	}
+}
 
 template<typename T>
 inline DoublyLinkedList<T>::~DoublyLinkedList()
@@ -39,10 +56,10 @@ inline DoublyLinkedList<T>::~DoublyLinkedList()
 }
 
 template<typename T>
-inline void DoublyLinkedList<T>::push_front(T data)
+inline bool DoublyLinkedList<T>::push_front(T data)
 {
-	Node<T>* newNode = new Node<T>(data,head,nullptr);
-		
+	Node<T>* newNode = new Node<T>(data, head, nullptr);
+
 	if (head != nullptr) {
 		head->previous = newNode;
 	}
@@ -51,23 +68,25 @@ inline void DoublyLinkedList<T>::push_front(T data)
 		tail = newNode;
 	}
 	this->size++;
+	return true;
 }
 
 template<typename T>
-inline void DoublyLinkedList<T>::push_back(T data)
+inline bool DoublyLinkedList<T>::push_back(T data)
 {
 	if (head == nullptr) {
 		push_front(data);
-		return;
+		return true;
 	}
-	Node<T>* newNode = new Node<T>(data,nullptr,tail);
+	Node<T>* newNode = new Node<T>(data, nullptr, tail);
 	tail->next = newNode;
 	tail = newNode;
 	this->size++;
+	return true;
 }
 
 template<typename T>
-inline void DoublyLinkedList<T>::pop_front()
+inline const T& DoublyLinkedList<T>::pop_front()
 {
 	if (head == nullptr) {
 		return;
@@ -81,11 +100,13 @@ inline void DoublyLinkedList<T>::pop_front()
 		tail = nullptr;
 	}
 	this->size--;
+	T data = temp->data;
 	delete temp;
+	return data;
 }
 
 template<typename T>
-inline void DoublyLinkedList<T>::pop_back()
+inline const T& DoublyLinkedList<T>::pop_back()
 {
 	if (tail == nullptr) {
 		return;
@@ -99,14 +120,16 @@ inline void DoublyLinkedList<T>::pop_back()
 		head = nullptr;
 	}
 	this->size--;
+	T data = temp->data;
 	delete temp;
+	return data;
 }
+
 template<typename T>
 inline bool DoublyLinkedList<T>::insert(size_t index, T data)
 {
 	if (index<0 || index>this->size) {
 		throw std::out_of_range(std::to_string(index) + " Index Out Of Range ");
-		return false;
 	}
 	if (index == 0) {
 		this->push_front(data);
@@ -126,18 +149,41 @@ inline bool DoublyLinkedList<T>::insert(size_t index, T data)
 	this->size++;
 	return true;
 }
+
 template<typename T>
 inline bool DoublyLinkedList<T>::insert(Order& order)
 {
+	if (order.getOrderRating() < 0.75f) {
+		this->push_back(order);
+		return true;
+	}
+	Node<T>* tracer = this->head;
+	while (tracer != nullptr && order.getOrderRating() <= tracer->data.getOrderRating()) {
+		tracer = tracer->next;
+	}
+
+	if (tracer == nullptr) {
+		this->push_back(order);
+	}
+	else if (tracer == this->head) {
+		this->push_front(order);
+	}
+	else {
+		Node<T>* newNode = new Node<T>(order, tracer, tracer->previous);
+		tracer->previous->next = newNode;
+		tracer->previous = newNode;
+		this->size++;
+	}
 
 	return true;
 }
+
 template<typename T>
-inline void DoublyLinkedList<T>::print()
+inline void DoublyLinkedList<T>::printOrders()const
 {
 	Node<T>* tracer = head;
 	while (tracer != nullptr) {
-		std::cout << "\nMisamarti " << tracer << " | Mnishvneloba " << tracer->data;
+		tracer->data.print();
 		tracer = tracer->next;
 	}
 	std::cout << "\nSize " << this->size;
