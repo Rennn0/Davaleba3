@@ -25,12 +25,12 @@ Order::Order(std::initializer_list<int> productIds, float rating)
 	}
 };
 
-auto Order::getBasketSize() const
+size_t Order::getBasketSize() const
 {
 	return this->m_basketSize;
 }
 
-auto Order::getOrderId() const
+long long Order::getOrderId() const
 {
 	return this->m_oderId;
 }

@@ -1,6 +1,12 @@
-#ifndef _D_L_L_
+﻿#ifndef _D_L_L_
 #define _D_L_L_
 #include"order.h"
+
+/*
+	ორმაგად ბმული სიის წარმოება შაბლონის დახმარებით
+	შეიცავს როგორც დამახასიათებელ მეთდებს ისე 
+	სპეციფიურს ამოცანის გადასაწყეტად, ასევე გამოუსადეგარსაც
+*/
 template<typename T>
 class DoublyLinkedList {
 	template<typename Y>
@@ -25,8 +31,8 @@ public:
 	bool insert(size_t index, T data);
 	bool insert(Order& order);
 
-	T& remove();
-	T& remove(size_t nThNode);
+	T remove();
+	T remove(size_t nThNode);
 
 	void printOrders(const std::string& busName)const;
 	void printOrders()const;
@@ -88,7 +94,7 @@ template<typename T>
 inline const T& DoublyLinkedList<T>::pop_front()
 {
 	if (head == nullptr) {
-		return;
+		throw std::error_condition();
 	}
 	Node<T>* temp = head;
 	head = head->next;
@@ -108,7 +114,7 @@ template<typename T>
 inline const T& DoublyLinkedList<T>::pop_back()
 {
 	if (tail == nullptr) {
-		return;
+		throw std::error_condition();
 	}
 	Node<T>* temp = tail;
 	tail = tail->previous;
@@ -178,7 +184,7 @@ inline bool DoublyLinkedList<T>::insert(Order& order)
 }
 
 template<typename T>
-inline T& DoublyLinkedList<T>::remove()
+inline T DoublyLinkedList<T>::remove()
 {
 	if (this->head == nullptr) {
 		throw std::out_of_range("Error condition 0");
@@ -187,11 +193,12 @@ inline T& DoublyLinkedList<T>::remove()
 	this->head = this->head->next;
 	T data = temp->data;
 	delete temp;
+	this->size--;
 	return data;
 }
 
 template<typename T>
-inline T& DoublyLinkedList<T>::remove(size_t nThNode)
+inline T DoublyLinkedList<T>::remove(size_t nThNode)
 {
 	if (this->head == nullptr || this->size < nThNode || nThNode==0) {
 		throw std::out_of_range("Error condition 3");
