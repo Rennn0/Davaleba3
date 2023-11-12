@@ -25,9 +25,8 @@ public:
 	bool insert(size_t index, T data);
 	bool insert(Order& order);
 
-	/* TODO
 	T& remove();
-	T& remove(size_t nThNode);*/
+	T& remove(size_t nThNode);
 
 	void printOrders(const std::string& busName)const;
 	void printOrders()const;
@@ -176,6 +175,43 @@ inline bool DoublyLinkedList<T>::insert(Order& order)
 	}
 
 	return true;
+}
+
+template<typename T>
+inline T& DoublyLinkedList<T>::remove()
+{
+	if (this->head == nullptr) {
+		throw std::out_of_range("Error condition 0");
+	}
+	Node<T>* temp = this->head;
+	this->head = this->head->next;
+	T data = temp->data;
+	delete temp;
+	return data;
+}
+
+template<typename T>
+inline T& DoublyLinkedList<T>::remove(size_t nThNode)
+{
+	if (this->head == nullptr || this->size < nThNode || nThNode==0) {
+		throw std::out_of_range("Error condition 3");
+	}
+	if (nThNode == 1) {
+		return this->pop_front();
+	}
+	if (nThNode == this->size) {
+		return this->pop_back();
+	}
+	Node<T>* target = this->head;
+	for (size_t t = 0; t < nThNode -1 ; t++) {
+		target = target->next;
+	}
+	target->previous->next = target->next;
+	target->next->previous = target->previous;
+	T& data = target->data;
+	delete target;
+	
+	return data;
 }
 
 template<typename T>

@@ -28,11 +28,16 @@ void TradingCentral::placeOrder(std::string busName, std::initializer_list<int> 
 	}
 }
 
+Order TradingCentral::processOrder()
+{
+	return this->m_o_dll.remove();
+}
+
 void TradingCentral::print()const
 {
 	this->m_o_dll.printOrders();
 	std::cout << "\n\n\n\n\n\n\n\n\n";
-	for (const auto& bs : this->m_bs_v) {
-		bs.printOrders();
-	}
+	//for (const auto& bs : this->m_bs_v) {
+	//	bs.printOrders();
+	//}
 }

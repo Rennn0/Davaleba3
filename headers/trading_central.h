@@ -11,8 +11,8 @@ class TradingCentral {
 public:
 	TradingCentral() :m_bs_v({}), m_o_dll({}), m_registeredBusinesses(0) {}
 
-
 	void placeOrder(std::string busName, std::initializer_list<int>productIds);
+	Order processOrder();
 	void print()const;
 };
 
